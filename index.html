@@ -34,15 +34,24 @@
     }
 
     td, th {
-      padding: 5px 10px;
+        padding: 5px 10px;
         border: 1px solid #000;
         border-bottom: none;
         border-right: none;
     }
 
-    th {
-      position: sticky; 
+    tr:first-child {
+      position: sticky;
       top: 0;
+      min-height: 30px;
+    }
+
+    .nested {
+      position: sticky;
+      top: 29px;
+    }
+
+    th {
       background: rgb(50, 50, 50);
       color: white;
     }
@@ -152,7 +161,7 @@
       let headerRowSize = 1
       const nestedRowInfo = []
 
-      // Handle nested headers
+      // Derive nested headers
       let headers = {}
       info.columns.forEach(str => {
         const lastChar = str.slice(-1)[0]
@@ -194,6 +203,7 @@
       // Add nested headers
       if (nestedRowInfo.length) {
           const tr = document.createElement('tr')
+          tr.classList.add('nested')
           tr.append(...nestedRowInfo.map(cell => {
             const th = document.createElement('th')
             th.innerText = cell
