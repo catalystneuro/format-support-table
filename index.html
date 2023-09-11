@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Sheets Test</title>
+  <style>
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      width: 100vw;
+      height: 100vh;
+      margin: 0;
+      overflow: hidden;
+      font-family: Arial, Helvetica, sans-serif
+    }
+
+    body {
+      display: grid;
+      grid-template-rows: min-content 1fr min-content;
+    }
+
+    h2 {
+      background: black;
+      color: white;
+      padding: 10px 20px; 
+      margin: 0;
+    }
+
+    table {
+      border: 1px solid black;
+    }
+
+    td, th {
+      padding: 5px 10px;
+        border: 1px solid #000;
+        border-bottom: none;
+        border-right: none;
+    }
+
+    th {
+      position: sticky; 
+      top: 0;
+      background: rgb(50, 50, 50);
+      color: white;
+    }
+
+    th {
+      border-right: 1px solid black;
+    }
+
+    main {
+      overflow: auto;
+      width: 100%;
+    }
+    
+
+    #tabs {
+      border-top: 1px solid black;
+      width: 100vw;
+      display: flex;
+      overflow-x: auto;
+      padding: 10px;
+      background: white;
+      gap: 25px;
+    }
+    
+
+    td[value="TRUE"], td[value="FALSE"] {
+      font-size:0;
+    }
+
+    td[value="TRUE"]:before {
+      content: "✅";
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    td[value="FALSE"]:before {
+      content: "❌";
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    td[value=""] {
+      background: black;
+    }
+
+    
+
+    #tabs div {
+      cursor: pointer;
+    }
+
+    #tabs span {
+      font-weight: bold;
+    }
+  </style>
+  <script src="https://d3js.org/d3.v6.min.js"></script>
+
+</head>
+
+<body>
+  <h2></h2>
+
+  <main>
+    <table cellpadding="0" cellspacing="0" ></table>
+  </main>
+
+  <div id="tabs"></div>
+
+  <script type="module">
+    const id = '13ikozn6XrOGdWGa_vyxH3MZu4NkN7f4ArHonPLvb9I0'
+
+    const tabIds = ['Ecephys', 'Sorting', 'Icephys']
+
+    async function getTable(sheetId) {
+      return await d3.csv(`https://docs.google.com/spreadsheets/d/${id}/gviz/tq?tqx=out:csv&sheet=${sheetId}`)
+    }
+
+    const table = document.querySelector('table')
+    const h2 = document.querySelector('h2')
+
+    const tables = {}
+    tabIds.forEach(id => tables[id] = getTable(id))
+
+
+    function createCell(value) {
+      const td = document.createElement('td')
+      if (value === undefined) return
+      td.innerHTML = value
+      td.setAttribute('value', value)
+      return td
+    }
+
+    async function updateTable(sheet) {
+
+      table.innerText = ''
+
+      const info = await tables[sheet]
+
+
+      h2.innerText = sheet
+
+      let merged = null;
+      let headerRowSize = 1
+      const nestedRowInfo = []
+
+      // Handle nested headers
+      let headers = {}
+      info.columns.forEach(str => {
+        const lastChar = str.slice(-1)[0]
+        if (lastChar === ' ') {
+          merged = null
+          headers[str] = true
+         } else {
+
+          const split = str.split(' ')
+
+          if (!merged || split.length > 1) {
+            headerRowSize = 2
+            merged = split.shift()
+            headers[merged] = [str]
+            nestedRowInfo.push(split.join(' '))
+            return
+          }
+
+          nestedRowInfo.push(str)
+          headers[merged].push(str)
+        }
+      })
+
+
+      // Add general headers
+      const tr = document.createElement('tr')
+      tr.append(...Object.entries(headers).map(([cell, info]) => {
+        const th = document.createElement('th')
+        const isMerged = info !== true
+        if (isMerged) th.setAttribute('colspan',  info.length)
+        else th.setAttribute('rowspan',  headerRowSize)
+        th.innerText = cell
+        return th
+      }).flat())
+
+      table.append(tr)
+
+
+      // Add nested headers
+      if (nestedRowInfo.length) {
+          const tr = document.createElement('tr')
+          tr.append(...nestedRowInfo.map(cell => {
+            const th = document.createElement('th')
+            th.innerText = cell
+            return th
+          }))
+          table.append(tr)
+      }
+
+      table.append(...info.map(row => {
+        const tr = document.createElement('tr')
+        tr.append(...Object.entries(headers).map(([header, info]) => {
+
+          if (info === true) return createCell(row[header])
+          else return info.map(key => createCell(row[key]))
+
+        }).flat().filter(o => !!o))
+        return tr
+      }))
+    }
+
+    const tabs = document.getElementById('tabs')
+    tabs.append(...tabIds.map(sheet => {
+      const span = document.createElement('span')
+      span.innerText = sheet
+      const div = document.createElement('div')
+      div.onclick = () => updateTable(sheet)
+      div.append(span)
+      return div
+    }))
+
+    updateTable(tabIds[0])
+
+  </script>
+</body>
+
+</html>
