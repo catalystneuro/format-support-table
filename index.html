@@ -77,11 +77,11 @@
     }
     
 
-    td[value="TRUE"], td[value="FALSE"] {
+    td[value="TRUE"], td[value="FALSE"], td[value="true"], td[value="false"] {
       font-size:0;
     }
 
-    td[value="TRUE"]:before {
+    td[value="TRUE"]:before, td[value="true"]:before {
       content: "✅";
       font-size: 18px;
       display: flex;
@@ -89,7 +89,7 @@
       justify-content: center;
     }
 
-    td[value="FALSE"]:before {
+    td[value="FALSE"]:before, td[value="false"]:before {
       content: "❌";
       font-size: 18px;
       display: flex;
@@ -112,6 +112,7 @@
     }
   </style>
   <script src="https://d3js.org/d3.v6.min.js"></script>
+  <script lang="javascript" src="https://cdn.jsdelivr.net/npm/xlsx"></script>
 
 </head>
 
@@ -125,9 +126,53 @@
   <div id="tabs"></div>
 
   <script type="module">
+
+    const local = true
+
     const id = '13ikozn6XrOGdWGa_vyxH3MZu4NkN7f4ArHonPLvb9I0'
 
     const tabIds = ['Ecephys', 'Sorting', 'Icephys']
+
+    const readFromXLSX = async () => {
+          const res = await fetch('./Ecosystem Format Support v3.xlsx').catch(e => reject(e))
+          const wb = XLSX.read(await res.arrayBuffer(), {type: 'array'});
+
+          const wsname = wb.SheetNames[0];
+          const tables = {}
+
+          wb.SheetNames.forEach(name => {
+
+            const table = []
+            // const csv = d3.csvParse(XLSX.utils.sheet_to_csv(wb.Sheets[name])) // NOTE: Not the same anyways
+            const [ ogHeaders, ...lines ] = XLSX.utils.sheet_to_json(wb.Sheets[name], {header: 1})
+
+            const headers = []
+            const nestedHeaders = lines.shift()
+            ogHeaders.forEach((h, i) => {
+              const nextIdx = i + 1
+              const hasNestedHeaders = !ogHeaders[nextIdx] && i in nestedHeaders && nextIdx in nestedHeaders
+              if (hasNestedHeaders) {
+                headers.push(`${h} ${nestedHeaders[i]}`)
+                headers.push(nestedHeaders[nextIdx])
+              }
+              else headers.push(`${h} `)
+            })
+
+            tables[name] = lines.map(l => {
+              const row = {}
+                table.push(row)
+                headers.forEach((h, i)=> {
+                  row[h] = l[i] ?? ""
+                })
+                return row
+              })
+
+            tables[name].columns = headers      
+          })
+
+
+          return tables
+    }
 
     async function getTable(sheetId) {
       return await d3.csv(`https://docs.google.com/spreadsheets/d/${id}/gviz/tq?tqx=out:csv&sheet=${sheetId}`)
@@ -136,9 +181,12 @@
     const table = document.querySelector('table')
     const h2 = document.querySelector('h2')
 
-    const tables = {}
-    tabIds.forEach(id => tables[id] = getTable(id))
+    const tables = local ? await readFromXLSX() : tabIds.reduce((acc, id) => {
+      acc[id] = getTable(id)
+      return acc
+    }, {})
 
+    console.log(tables)
 
     function createCell(value) {
       const td = document.createElement('td')
@@ -234,7 +282,7 @@
       return div
     }))
 
-    updateTable(tabIds[0])
+    updateTable(Object.keys(tables)[0])
 
   </script>
 </body>
