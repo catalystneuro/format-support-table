@@ -135,9 +135,7 @@
 
     const readFromJSON = async (name) => {
 
-            const json = await fetch(`./${name.toLowerCase()}.json`).then(res => res.json()).catch(e => { return {} })
-
-           const table = Object.values(json)
+           const table  = await fetch(`./Ecosystem Format Support v3 - Simplified - ${name}.json`).then(res => res.json()).catch(e => { return {} })
 
            table.columns = table[0] ? Object.keys(table[0]) : []
 
