@@ -127,66 +127,31 @@
 
   <script type="module">
 
-    const local = true
+    
 
     const id = '13ikozn6XrOGdWGa_vyxH3MZu4NkN7f4ArHonPLvb9I0'
 
     const tabIds = ['Ecephys', 'Sorting', 'Icephys']
 
-    const readFromXLSX = async () => {
-          const res = await fetch('./Ecosystem Format Support v3.xlsx').catch(e => reject(e))
-          const wb = XLSX.read(await res.arrayBuffer(), {type: 'array'});
+    const readFromJSON = async (name) => {
 
-          const wsname = wb.SheetNames[0];
-          const tables = {}
+            const json = await fetch(`./${name.toLowerCase()}.json`).then(res => res.json()).catch(e => { return {} })
 
-          wb.SheetNames.forEach(name => {
+           const table = Object.values(json)
 
-            const table = []
-            // const csv = d3.csvParse(XLSX.utils.sheet_to_csv(wb.Sheets[name])) // NOTE: Not the same anyways
-            const [ ogHeaders, ...lines ] = XLSX.utils.sheet_to_json(wb.Sheets[name], {header: 1})
+           table.columns = table[0] ? Object.keys(table[0]) : []
 
-            const headers = []
-            const nestedHeaders = lines.shift()
-            ogHeaders.forEach((h, i) => {
-              const nextIdx = i + 1
-              const hasNestedHeaders = !ogHeaders[nextIdx] && i in nestedHeaders && nextIdx in nestedHeaders
-              if (hasNestedHeaders) {
-                headers.push(`${h} ${nestedHeaders[i]}`)
-                headers.push(nestedHeaders[nextIdx])
-              }
-              else headers.push(`${h} `)
-            })
+           return table
 
-            tables[name] = lines.map(l => {
-              const row = {}
-                table.push(row)
-                headers.forEach((h, i)=> {
-                  row[h] = l[i] ?? ""
-                })
-                return row
-              })
-
-            tables[name].columns = headers      
-          })
-
-
-          return tables
-    }
-
-    async function getTable(sheetId) {
-      return await d3.csv(`https://docs.google.com/spreadsheets/d/${id}/gviz/tq?tqx=out:csv&sheet=${sheetId}`)
     }
 
     const table = document.querySelector('table')
     const h2 = document.querySelector('h2')
 
-    const tables = local ? await readFromXLSX() : tabIds.reduce((acc, id) => {
-      acc[id] = getTable(id)
+    const tables = tabIds.reduce((acc, id) => {
+      acc[id] = readFromJSON(id)
       return acc
     }, {})
-
-    console.log(tables)
 
     function createCell(value) {
       const td = document.createElement('td')
@@ -202,7 +167,6 @@
 
       const info = await tables[sheet]
 
-
       h2.innerText = sheet
 
       let merged = null;
@@ -213,24 +177,24 @@
       let headers = {}
       info.columns.forEach(str => {
         const lastChar = str.slice(-1)[0]
-        if (lastChar === ' ') {
+        // if (lastChar === ' ') {
           merged = null
           headers[str] = true
-         } else {
+        //  } else {
 
-          const split = str.split(' ')
+        //   const split = str.split(' ')
 
-          if (!merged || split.length > 1) {
-            headerRowSize = 2
-            merged = split.shift()
-            headers[merged] = [str]
-            nestedRowInfo.push(split.join(' '))
-            return
-          }
+        //   if (!merged || split.length > 1) {
+        //     headerRowSize = 2
+        //     merged = split.shift()
+        //     headers[merged] = [str]
+        //     nestedRowInfo.push(split.join(' '))
+        //     return
+        //   }
 
-          nestedRowInfo.push(str)
-          headers[merged].push(str)
-        }
+        //   nestedRowInfo.push(str)
+        //   headers[merged].push(str)
+        // }
       })
 
 
