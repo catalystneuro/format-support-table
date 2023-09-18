@@ -58,7 +58,7 @@
         "NeuroConv - Interface": true,
         "NeuroConv - Tests": true,
         "NWB GUIDE": false
-    }
+    },
     {
         "Format": "ScanImage",
         "Suffixes": ".tif",
