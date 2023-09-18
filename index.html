@@ -64,18 +64,6 @@
       overflow: auto;
       width: 100%;
     }
-    
-
-    #tabs {
-      border-top: 1px solid black;
-      width: 100vw;
-      display: flex;
-      overflow-x: auto;
-      padding: 10px;
-      background: white;
-      gap: 25px;
-    }
-    
 
     td[value="TRUE"], td[value="FALSE"], td[value="true"], td[value="false"] {
       font-size:0;
@@ -101,7 +89,18 @@
       background: black;
     }
 
-    
+        
+
+    #tabs {
+      border-top: 1px solid black;
+      width: 100vw;
+      display: flex;
+      overflow-x: auto;
+      padding: 10px;
+      background: white;
+      gap: 25px;
+      font-size: 90%;
+    }
 
     #tabs div {
       cursor: pointer;
@@ -127,29 +126,28 @@
 
   <script type="module">
 
-    
+    import ecephysRec from './ecephys_recording.json' assert { type: 'json' }
+    import ecephysSort from './ecephys_sorting.json' assert { type: 'json' }
+    import icephys from './icephys.json' assert { type: 'json' }
+    import ophysImg from './ophys_imaging.json' assert { type: 'json' }
+    import ophysSeg from './ophys_segmentation.json' assert { type: 'json' }
+    import behavior from './behavior.json' assert { type: 'json' }
 
     const id = '13ikozn6XrOGdWGa_vyxH3MZu4NkN7f4ArHonPLvb9I0'
-
-    const tabIds = ['Ecephys', 'Sorting', 'Icephys']
-
-    const readFromJSON = async (name) => {
-
-           const table  = await fetch(`./Ecosystem Format Support v3 - Simplified - ${name}.json`).then(res => res.json()).catch(e => { return {} })
-
-           table.columns = table[0] ? Object.keys(table[0]) : []
-
-           return table
-
-    }
 
     const table = document.querySelector('table')
     const h2 = document.querySelector('h2')
 
-    const tables = tabIds.reduce((acc, id) => {
-      acc[id] = readFromJSON(id)
-      return acc
-    }, {})
+    const tables = {
+        'Ecephys - Recording': ecephysRec,
+        'Ecephys - Sorting': ecephysSort,
+        'Icephys': icephys,
+        'Ophys - Imaging': ophysImg,
+        'Ophys - Segmentation': ophysSeg,
+        'Behavior': behavior
+    }
+
+    Object.values(tables).forEach(t => t.columns = t[0] ? Object.keys(t[0]) : [])
 
     function createCell(value) {
       const td = document.createElement('td')
@@ -235,7 +233,7 @@
     }
 
     const tabs = document.getElementById('tabs')
-    tabs.append(...tabIds.map(sheet => {
+    tabs.append(...Object.keys(tables).map(sheet => {
       const span = document.createElement('span')
       span.innerText = sheet
       const div = document.createElement('div')
