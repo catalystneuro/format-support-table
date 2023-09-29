@@ -27,7 +27,7 @@
         "ROIExtractors - Tests": true,
         "NeuroConv - Interface": true,
         "NeuroConv - Tests": true,
-        "NWB GUIDE": false
+        "NWB GUIDE": true
     },
     {
         "Format": "Micro-Manager",
@@ -47,7 +47,7 @@
         "ROIExtractors - Tests": true,
         "NeuroConv - Interface": true,
         "NeuroConv - Tests": true,
-        "NWB GUIDE": false
+        "NWB GUIDE": true
     },
     {
         "Format": "ScanBox",
@@ -57,7 +57,7 @@
         "ROIExtractors - Tests": true,
         "NeuroConv - Interface": true,
         "NeuroConv - Tests": true,
-        "NWB GUIDE": false
+        "NWB GUIDE": true
     },
     {
         "Format": "ScanImage",
@@ -67,6 +67,6 @@
         "ROIExtractors - Tests": true,
         "NeuroConv - Interface": true,
         "NeuroConv - Tests": true,
-        "NWB GUIDE": false
+        "NWB GUIDE": true
     }
 ]
