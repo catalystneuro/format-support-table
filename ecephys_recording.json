@@ -296,7 +296,7 @@
         "SpikeInterface - Tests": true,
         "NeuroConv - Interface": true,
         "NeuroConv - Tests": true,
-        "NWB GUIDE": false
+        "NWB GUIDE": true
     },
     {
         "Format": "RawMCS",
@@ -572,8 +572,8 @@
         "NWB GUIDE": false
     },
     {
-        "Format": "OpenEphys",
-        "Versions": "Legacy",
+        "Format": "OpenEphys Legacy",
+        "Versions": null,
         "Suffixes": ".continuous",
         "Example Data": true,
         "Neo - Raw IO": true,
@@ -585,7 +585,7 @@
         "NWB GUIDE": true
     },
     {
-        "Format": "OpenEphys",
+        "Format": "OpenEphys Legacy",
         "Versions": null,
         "Suffixes": ".xml",
         "Example Data": true,
@@ -598,7 +598,7 @@
         "NWB GUIDE": true
     },
     {
-        "Format": "OpenEphys",
+        "Format": "OpenEphys Legacy",
         "Versions": null,
         "Suffixes": ".openephys",
         "Example Data": true,
