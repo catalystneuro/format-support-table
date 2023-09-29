@@ -659,7 +659,7 @@
         "SpikeInterface - Extractor": true,
         "SpikeInterface - Tests": true,
         "NeuroConv - Interface": true,
-        "NeuroConv - Tests": false,
+        "NeuroConv - Tests": true,
         "NWB GUIDE": true
     },
     {
@@ -672,7 +672,7 @@
         "SpikeInterface - Extractor": true,
         "SpikeInterface - Tests": true,
         "NeuroConv - Interface": true,
-        "NeuroConv - Tests": false,
+        "NeuroConv - Tests": true,
         "NWB GUIDE": true
     },
     {
