@@ -169,32 +169,6 @@
         "NWB GUIDE": false
     },
     {
-        "Format": "CED",
-        "Versions": null,
-        "Suffixes": ".smr",
-        "Example Data": true,
-        "Neo - Raw IO": true,
-        "Neo - Tests": true,
-        "SpikeInterface - Extractor": true,
-        "SpikeInterface - Tests": true,
-        "NeuroConv - Interface": true,
-        "NeuroConv - Tests": false,
-        "NWB GUIDE": false
-    },
-    {
-        "Format": "CED",
-        "Versions": null,
-        "Suffixes": ".smrx",
-        "Example Data": true,
-        "Neo - Raw IO": true,
-        "Neo - Tests": true,
-        "SpikeInterface - Extractor": true,
-        "SpikeInterface - Tests": true,
-        "NeuroConv - Interface": true,
-        "NeuroConv - Tests": true,
-        "NWB GUIDE": false
-    },
-    {
         "Format": "EDF",
         "Versions": null,
         "Suffixes": ".edf",
@@ -726,6 +700,32 @@
         "NeuroConv - Interface": false,
         "NeuroConv - Tests": false,
         "NWB GUIDE": false
+    },
+    {
+        "Format": "Spike2",
+        "Versions": null,
+        "Suffixes": ".smr",
+        "Example Data": true,
+        "Neo - Raw IO": true,
+        "Neo - Tests": true,
+        "SpikeInterface - Extractor": true,
+        "SpikeInterface - Tests": true,
+        "NeuroConv - Interface": true,
+        "NeuroConv - Tests": false,
+        "NWB GUIDE": false
+    },
+    {
+        "Format": "Spike2",
+        "Versions": null,
+        "Suffixes": ".smrx",
+        "Example Data": true,
+        "Neo - Raw IO": true,
+        "Neo - Tests": true,
+        "SpikeInterface - Extractor": true,
+        "SpikeInterface - Tests": true,
+        "NeuroConv - Interface": true,
+        "NeuroConv - Tests": true,
+        "NWB GUIDE": true
     },
     {
         "Format": "SpikeGadgets",
