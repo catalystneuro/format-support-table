@@ -7,7 +7,7 @@
         "ROIExtractors - Tests": true,
         "NeuroConv - Interface": true,
         "NeuroConv - Tests": true,
-        "NWB GUIDE": false
+        "NWB GUIDE": true
     },
     {
         "Format": "Generic HDF5",
@@ -37,7 +37,7 @@
         "ROIExtractors - Tests": true,
         "NeuroConv - Interface": true,
         "NeuroConv - Tests": true,
-        "NWB GUIDE": false
+        "NWB GUIDE": true
     },
     {
         "Format": "Miniscope",
