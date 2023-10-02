@@ -87,6 +87,10 @@
       color: rgb(45, 45, 45);
     }
 
+    td[value="undefined"] {
+      background: black;
+    }
+
     td[value="TRUE"], td[value="FALSE"], td[value="true"], td[value="false"] {
       font-size:0;
     }
@@ -170,7 +174,7 @@
 
     const main = document.querySelector('main')
 
-    const tables = {
+    let tables = {
         'Ecephys - Recording': ecephysRec,
         'Ecephys - Sorting': ecephysSort,
         'Icephys': icephys,
@@ -179,22 +183,61 @@
         'Behavior': behavior
     }
 
-    Object.values(tables).forEach(t => t.columns = t[0] ? Object.keys(t[0]) : [])
 
-    function createCell(value) {
+    const overviewCols = ['Type']
+
+    const overviewTable = Object.entries(tables).map(([Type, t]) => {
+      t.columns = t[0] ? Object.keys(t[0]) : []
+
+      const stats = t.reduce((acc, cell) => {
+          Object.keys(cell).forEach(k => {
+            console.log(k)
+            if (typeof cell[k] === 'boolean') {
+              if (!overviewCols.includes(k)) overviewCols.push(k)
+              if (!acc[k]) acc[k] = 0
+
+              if(cell[k]) acc[k]++
+            }
+          })
+
+          return acc
+      }, {})
+
+      return { Type, total: t.length, ...stats }
+    })
+
+    // overviewTable.push({
+    //   Type: "Total"
+    // })
+
+    overviewTable.columns = overviewCols
+
+    tables = {
+      Overview: overviewTable,
+      ...tables
+    }
+
+    function createCell(value, { total }) {
       const td = document.createElement('td')
-      if (value === undefined) return
 
       if (typeof value === 'string') {
         const [title, subtitle] = value.split('-')
         td.innerHTML = `${title}<br><small>${subtitle ?? ""}</small>`
+      } 
+      
+      else {
+        if (value && total) {
+          td.innerHTML = `${value}${total ? ` <small>(${(100 * value / total).toFixed(1)}%)` : ''}</small>`
+        }
+        else td.innerText = value
       }
 
       td.setAttribute('value', value)
+      
       return td
     }
 
-    function addColumnsToTable (table, info) {
+    function addColumnsToTable (table, info, nColsSticky) {
 
       let merged = null;
       let headerRowSize = 1
@@ -264,13 +307,10 @@
           table.append(tr)
       }
 
-      const rows = info.map(row => {
+      const rows = info.map(cell => {
         const tr = document.createElement('tr')
         tr.append(...Object.entries(headers).map(([header, info]) => {
-
-          if (info === true) return createCell(row[header])
-          else return info.map(key => createCell(row[key]))
-
+          return (info === true) ? createCell(cell[header], cell) : info.map(key => createCell(cell[key], cell))
         }).flat().filter(o => !!o))
         return tr
       })
@@ -298,7 +338,7 @@
 
       const info = await tables[sheet]
 
-      addColumnsToTable(table, info)
+      addColumnsToTable(table, info, sheet === 'Overview' ? 1 : nColsSticky)
 
     }
 
