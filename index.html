@@ -222,8 +222,6 @@
     const guideIdx = overviewCols.findIndex((v) => v === guideValue)
     overviewCols.splice(guideIdx, 1)
 
-    console.log(overviewTable)
-
     overviewTable.columns = [...overviewCols, guideValue]
 
     tables = {
