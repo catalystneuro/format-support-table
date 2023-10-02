@@ -58,10 +58,12 @@
     th {
       background: rgb(50, 50, 50);
       color: white;
+      border-right: 1px solid black;
     }
 
-    th {
-      border-right: 1px solid black;
+    th > small {
+      font-size: 80%;
+      font-weight: 400;
     }
 
     main {
@@ -223,7 +225,9 @@
         const isMerged = info !== true
         if (isMerged) th.setAttribute('colspan',  info.length)
         else th.setAttribute('rowspan',  headerRowSize)
-        th.innerText = cell
+      
+        const [title, subtitle] = cell.split('-')
+        th.innerHTML = `${title}<br><small>${subtitle ?? ""}</small>`
         return th
       }).flat())
 
