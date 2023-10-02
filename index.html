@@ -42,11 +42,19 @@
         border-left: none;
     }
 
+    /* Sticky Header Rows */
     tr:first-child {
       position: sticky;
       top: 0;
       min-height: 30px;
       z-index: 2;
+    }
+
+    /* Sticky Columns */
+
+    .sticky {
+      position: sticky;
+      left: 0;
     }
 
     .nested {
@@ -95,12 +103,7 @@
     td[value=""] {
       background: black;
     }
-
-    tr > *:first-child {
-      position: sticky;
-      left: 0;
-    }
-        
+       
 
     #tabs {
       border-top: 1px solid black;
@@ -137,6 +140,8 @@
 
   <script type="module">
 
+    const nColsSticky = 3
+
     import ecephysRec from './ecephys_recording.json' assert { type: 'json' };
     import ecephysSort from './ecephys_sorting.json' assert { type: 'json' };
     import icephys from './icephys.json' assert { type: 'json' };
@@ -147,7 +152,10 @@
     const id = '13ikozn6XrOGdWGa_vyxH3MZu4NkN7f4ArHonPLvb9I0'
 
     const table = document.querySelector('table')
+    const stickyTable = document.createElement('table')
+
     const h2 = document.querySelector('h2')
+    const main = document.querySelector('main')
 
     const tables = {
         'Ecephys - Recording': ecephysRec,
@@ -168,13 +176,7 @@
       return td
     }
 
-    async function updateTable(sheet) {
-
-      table.innerText = ''
-
-      const info = await tables[sheet]
-
-      h2.innerText = sheet
+    function addColumnsToTable (table, info) {
 
       let merged = null;
       let headerRowSize = 1
@@ -204,17 +206,19 @@
         // }
       })
 
-
       // Add general headers
       const tr = document.createElement('tr')
-      tr.append(...Object.entries(headers).map(([cell, info]) => {
+
+      const headerEls = Object.entries(headers).map(([cell, info], i) => {
         const th = document.createElement('th')
         const isMerged = info !== true
         if (isMerged) th.setAttribute('colspan',  info.length)
         else th.setAttribute('rowspan',  headerRowSize)
         th.innerText = cell
         return th
-      }).flat())
+      }).flat()
+
+      tr.append(...headerEls)
 
       table.append(tr)
 
@@ -231,7 +235,7 @@
           table.append(tr)
       }
 
-      table.append(...info.map(row => {
+      const rows = info.map(row => {
         const tr = document.createElement('tr')
         tr.append(...Object.entries(headers).map(([header, info]) => {
 
@@ -240,7 +244,35 @@
 
         }).flat().filter(o => !!o))
         return tr
-      }))
+      })
+
+      const makeSticky = (row) => {
+        row.slice(0, nColsSticky).reduce((acc, cell) => {
+          cell.classList.add('sticky')
+          cell.style.left = `${acc}px`
+          return acc + cell.getBoundingClientRect().width
+        }, 0)
+      }
+
+      table.append(...rows)
+
+
+      rows.forEach(r => {
+        makeSticky(headerEls)
+        makeSticky(Array.from(r.children))
+      })
+    }
+
+    async function updateTable(sheet) {
+
+      table.innerText = ''
+
+      const info = await tables[sheet]
+
+      h2.innerText = sheet
+
+      addColumnsToTable(table, info)
+
     }
 
     const tabs = document.getElementById('tabs')
