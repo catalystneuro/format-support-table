@@ -52,7 +52,7 @@
 
     .nested {
       position: sticky;
-      top: 29px;
+      top: 27px;
     }
 
     th {
@@ -73,6 +73,10 @@
 
     td {
       background: white;
+    }
+
+    td small {
+      color: rgb(45, 45, 45);
     }
 
     td[value="TRUE"], td[value="FALSE"], td[value="true"], td[value="false"] {
@@ -173,7 +177,12 @@
     function createCell(value) {
       const td = document.createElement('td')
       if (value === undefined) return
-      td.innerHTML = value
+
+      if (typeof value === 'string') {
+        const [title, subtitle] = value.split('-')
+        td.innerHTML = `${title}<br><small>${subtitle ?? ""}</small>`
+      }
+
       td.setAttribute('value', value)
       return td
     }
@@ -194,27 +203,38 @@
       const nestedRowInfo = []
 
       // Derive nested headers
-      let headers = {}
-      info.columns.forEach(str => {
-        const lastChar = str.slice(-1)[0]
-        // if (lastChar === ' ') {
-          merged = null
-          headers[str] = true
-        //  } else {
+      const headers = {}
 
-        //   const split = str.split(' ')
+      const formatHeader = 'Format'
+      const versionsHeader = 'Versions'
+      const cols = info.columns
+      const formatIdx = cols.findIndex((v) => v === formatHeader)
+      const versionsIdx = cols.findIndex((v) => v === versionsHeader)
 
-        //   if (!merged || split.length > 1) {
-        //     headerRowSize = 2
-        //     merged = split.shift()
-        //     headers[merged] = [str]
-        //     nestedRowInfo.push(split.join(' '))
-        //     return
-        //   }
 
-        //   nestedRowInfo.push(str)
-        //   headers[merged].push(str)
-        // }
+      // Update format column to include versions as subtitles
+      if (formatIdx !== -1 && versionsIdx !== -1) {
+        info.forEach(row => {
+          if (row[versionsHeader]) row[formatHeader] += ` - ${row[versionsHeader]}`
+        })
+
+        cols.splice(versionsIdx, 1)
+      }      
+
+      cols.forEach(str => {
+
+        const [ title, subtitle ] = str.split('-')
+
+        const consolidated = headers[title]
+
+        if (subtitle) {
+          headerRowSize = 2
+          nestedRowInfo.push(subtitle)
+          if (consolidated) consolidated.push(str)
+          else {
+            headers[title] = [ str ]
+          }
+        } else headers[str] = true
       })
 
 
@@ -225,9 +245,7 @@
         const isMerged = info !== true
         if (isMerged) th.setAttribute('colspan',  info.length)
         else th.setAttribute('rowspan',  headerRowSize)
-      
-        const [title, subtitle] = cell.split('-')
-        th.innerHTML = `${title}<br><small>${subtitle ?? ""}</small>`
+        th.innerText = cell
         return th
       }).flat())
 
