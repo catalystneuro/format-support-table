@@ -19,7 +19,7 @@
 
     body {
       display: grid;
-      grid-template-rows: min-content 1fr min-content;
+      grid-template-rows: 1fr min-content;
     }
 
     h2 {
@@ -33,6 +33,7 @@
       border: 1px solid black;
       border-right: none;
       border-bottom: none;
+      font-size: 14px;
     }
 
     td, th {
@@ -78,7 +79,7 @@
 
     td[value="TRUE"]:before, td[value="true"]:before {
       content: "✅";
-      font-size: 18px;
+      font-size: 14px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -86,7 +87,7 @@
 
     td[value="FALSE"]:before, td[value="false"]:before {
       content: "❌";
-      font-size: 18px;
+      font-size: 14px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -107,19 +108,27 @@
       width: 100vw;
       display: flex;
       overflow-x: auto;
-      padding: 10px;
       background: white;
-      gap: 25px;
       font-size: 90%;
     }
 
     #tabs div {
       cursor: pointer;
+      border: 1px solid #000;
+      border-top: none;
+      border-left: none;
+      padding: 10px 16px;
     }
 
     #tabs span {
       font-weight: bold;
     }
+
+    #tabs > [selected] {
+      color: rgb(8, 86, 255);
+      background: rgb(225, 235, 255);
+    }
+
   </style>
   <script src="https://d3js.org/d3.v6.min.js"></script>
   <script lang="javascript" src="https://cdn.jsdelivr.net/npm/xlsx"></script>
@@ -127,8 +136,6 @@
 </head>
 
 <body>
-  <h2></h2>
-
   <main>
     <table cellpadding="0" cellspacing="0" ></table>
   </main>
@@ -146,6 +153,7 @@
 
     const id = '13ikozn6XrOGdWGa_vyxH3MZu4NkN7f4ArHonPLvb9I0'
 
+    const tabs = document.getElementById('tabs')
     const table = document.querySelector('table')
     const h2 = document.querySelector('h2')
 
@@ -174,7 +182,10 @@
 
       const info = await tables[sheet]
 
-      h2.innerText = sheet
+      Array.from(tabs.children).find(tab => {
+        if (tab.innerText === sheet) tab.setAttribute('selected', '')
+        else tab.removeAttribute('selected')
+      })
 
       let merged = null;
       let headerRowSize = 1
@@ -243,7 +254,6 @@
       }))
     }
 
-    const tabs = document.getElementById('tabs')
     tabs.append(...Object.keys(tables).map(sheet => {
       const span = document.createElement('span')
       span.innerText = sheet
