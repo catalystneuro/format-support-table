@@ -169,32 +169,6 @@
         "NWB GUIDE": false
     },
     {
-        "Format": "CED",
-        "Versions": null,
-        "Suffixes": ".smr",
-        "Example Data": true,
-        "Neo - Raw IO": true,
-        "Neo - Tests": true,
-        "SpikeInterface - Extractor": true,
-        "SpikeInterface - Tests": true,
-        "NeuroConv - Interface": true,
-        "NeuroConv - Tests": false,
-        "NWB GUIDE": false
-    },
-    {
-        "Format": "CED",
-        "Versions": null,
-        "Suffixes": ".smrx",
-        "Example Data": true,
-        "Neo - Raw IO": true,
-        "Neo - Tests": true,
-        "SpikeInterface - Extractor": true,
-        "SpikeInterface - Tests": true,
-        "NeuroConv - Interface": true,
-        "NeuroConv - Tests": true,
-        "NWB GUIDE": false
-    },
-    {
         "Format": "EDF",
         "Versions": null,
         "Suffixes": ".edf",
@@ -309,7 +283,7 @@
         "SpikeInterface - Tests": true,
         "NeuroConv - Interface": true,
         "NeuroConv - Tests": true,
-        "NWB GUIDE": false
+        "NWB GUIDE": true
     },
     {
         "Format": "RawMCS",
@@ -322,7 +296,7 @@
         "SpikeInterface - Tests": true,
         "NeuroConv - Interface": true,
         "NeuroConv - Tests": true,
-        "NWB GUIDE": false
+        "NWB GUIDE": true
     },
     {
         "Format": "RawMCS",
@@ -598,8 +572,8 @@
         "NWB GUIDE": false
     },
     {
-        "Format": "OpenEphys",
-        "Versions": "Legacy",
+        "Format": "OpenEphys Legacy",
+        "Versions": null,
         "Suffixes": ".continuous",
         "Example Data": true,
         "Neo - Raw IO": true,
@@ -611,7 +585,7 @@
         "NWB GUIDE": true
     },
     {
-        "Format": "OpenEphys",
+        "Format": "OpenEphys Legacy",
         "Versions": null,
         "Suffixes": ".xml",
         "Example Data": true,
@@ -624,7 +598,7 @@
         "NWB GUIDE": true
     },
     {
-        "Format": "OpenEphys",
+        "Format": "OpenEphys Legacy",
         "Versions": null,
         "Suffixes": ".openephys",
         "Example Data": true,
@@ -728,6 +702,32 @@
         "NWB GUIDE": false
     },
     {
+        "Format": "Spike2",
+        "Versions": null,
+        "Suffixes": ".smr",
+        "Example Data": true,
+        "Neo - Raw IO": true,
+        "Neo - Tests": true,
+        "SpikeInterface - Extractor": true,
+        "SpikeInterface - Tests": true,
+        "NeuroConv - Interface": true,
+        "NeuroConv - Tests": false,
+        "NWB GUIDE": false
+    },
+    {
+        "Format": "Spike2",
+        "Versions": null,
+        "Suffixes": ".smrx",
+        "Example Data": true,
+        "Neo - Raw IO": true,
+        "Neo - Tests": true,
+        "SpikeInterface - Extractor": true,
+        "SpikeInterface - Tests": true,
+        "NeuroConv - Interface": true,
+        "NeuroConv - Tests": true,
+        "NWB GUIDE": true
+    },
+    {
         "Format": "SpikeGadgets",
         "Versions": null,
         "Suffixes": ".rec",
@@ -743,46 +743,7 @@
     {
         "Format": "SpikeGLX",
         "Versions": null,
-        "Suffixes": ".ap.bin",
-        "Example Data": true,
-        "Neo - Raw IO": true,
-        "Neo - Tests": true,
-        "SpikeInterface - Extractor": true,
-        "SpikeInterface - Tests": true,
-        "NeuroConv - Interface": true,
-        "NeuroConv - Tests": true,
-        "NWB GUIDE": true
-    },
-    {
-        "Format": "SpikeGLX",
-        "Versions": null,
-        "Suffixes": ".lf.meta",
-        "Example Data": true,
-        "Neo - Raw IO": true,
-        "Neo - Tests": true,
-        "SpikeInterface - Extractor": true,
-        "SpikeInterface - Tests": true,
-        "NeuroConv - Interface": true,
-        "NeuroConv - Tests": true,
-        "NWB GUIDE": true
-    },
-    {
-        "Format": "SpikeGLX",
-        "Versions": null,
-        "Suffixes": ".lf.bin",
-        "Example Data": true,
-        "Neo - Raw IO": true,
-        "Neo - Tests": true,
-        "SpikeInterface - Extractor": true,
-        "SpikeInterface - Tests": true,
-        "NeuroConv - Interface": true,
-        "NeuroConv - Tests": true,
-        "NWB GUIDE": true
-    },
-    {
-        "Format": "SpikeGLX",
-        "Versions": null,
-        "Suffixes": ".lf.meta",
+        "Suffixes": ".ap, .lf, .bin, .meta",
         "Example Data": true,
         "Neo - Raw IO": true,
         "Neo - Tests": true,
