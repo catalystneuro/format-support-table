@@ -186,17 +186,24 @@
 
     const overviewCols = ['Type']
 
+    const totals = {}
+
     const overviewTable = Object.entries(tables).map(([Type, t]) => {
       t.columns = t[0] ? Object.keys(t[0]) : []
 
       const stats = t.reduce((acc, cell) => {
           Object.keys(cell).forEach(k => {
-            console.log(k)
             if (typeof cell[k] === 'boolean') {
               if (!overviewCols.includes(k)) overviewCols.push(k)
               if (!acc[k]) acc[k] = 0
+              if (!totals[k]) totals[k] = { value: 0, total: 0}
 
-              if(cell[k]) acc[k]++
+              if(cell[k]) {
+                acc[k]++
+                totals[k].value++
+              }
+
+              totals[k].total++
             }
           })
 
@@ -206,15 +213,31 @@
       return { Type, total: t.length, ...stats }
     })
 
-    // overviewTable.push({
-    //   Type: "Total"
-    // })
 
-    overviewTable.columns = overviewCols
+    for (let k in totals) {
+      totals[k] = getPercent(totals[k].value, totals[k].total)
+    }
+
+    overviewTable.push({
+      Type: "Total",
+      ...totals,
+    })
+
+    const guideValue = 'NWB GUIDE'
+    const guideIdx = overviewCols.findIndex((v) => v === guideValue)
+    overviewCols.splice(guideIdx, 1)
+
+    console.log(overviewTable)
+
+    overviewTable.columns = [...overviewCols, guideValue]
 
     tables = {
       Overview: overviewTable,
       ...tables
+    }
+
+    function getPercent(value, total) {
+      return `${value}<small>${value && total ? ` (${(100 * value / total).toFixed(1)}%)` : ''}</small>`
     }
 
     function createCell(value, { total }) {
@@ -226,10 +249,7 @@
       } 
       
       else {
-        if (value && total) {
-          td.innerHTML = `${value}${total ? ` <small>(${(100 * value / total).toFixed(1)}%)` : ''}</small>`
-        }
-        else td.innerText = value
+        td.innerHTML = getPercent(value, total)
       }
 
       td.setAttribute('value', value)
