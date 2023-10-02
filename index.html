@@ -358,6 +358,11 @@
 
       const info = await tables[sheet]
 
+      Array.from(tabs.children).forEach(t => {
+        if (t.innerText === sheet) t.setAttribute('selected', '')
+        else t.removeAttribute('selected')
+      })
+
       addColumnsToTable(table, info, sheet === 'Overview' ? 1 : nColsSticky)
 
     }
