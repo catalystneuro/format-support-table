@@ -120,7 +120,7 @@
         "NWB GUIDE": false
     },
     {
-        "Format": "Nerualynx",
+        "Format": "Neuralynx",
         "Suffixes": null,
         "Example Data": false,
         "SpikeInterface - Extractor": false,
