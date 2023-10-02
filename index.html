@@ -213,11 +213,6 @@
       return { Type, total: t.length, ...stats }
     })
 
-
-    for (let k in totals) {
-      totals[k] = getPercent(totals[k].value, totals[k].total)
-    }
-
     overviewTable.push({
       Type: "Total",
       ...totals,
@@ -249,7 +244,14 @@
       } 
       
       else {
+
+        if (value && typeof value === 'object') {
+          total = value.total
+          value = value.value
+        }
+
         td.innerHTML = getPercent(value, total)
+        td.style.background = fractionToColor(value/total, .4)
       }
 
       td.setAttribute('value', value)
@@ -372,6 +374,26 @@
     }))
 
     updateTable(Object.keys(tables)[0])
+
+
+
+    // License: MIT - https://opensource.org/licenses/MIT
+  // Author: Michele Locati <michele@locati.it>
+  // Source: https://gist.github.com/mlocati/7210513
+  function fractionToColor(frac, opacity = 1) {
+    const perc = frac * 100
+    var r, g, b = 0;
+    if(perc < 50) {
+      r = 255;
+      g = Math.round(5.1 * perc);
+    }
+    else {
+      g = 255;
+      r = Math.round(510 - 5.10 * perc);
+    }
+    var h = r * 0x10000 + g * 0x100 + b * 0x1;
+    return '#' + ('000000' + h.toString(16)).slice(-6) + (Math.round(255 * opacity)).toString(16);
+  }
 
   </script>
 </body>
