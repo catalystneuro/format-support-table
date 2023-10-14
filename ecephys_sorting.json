@@ -162,12 +162,12 @@
     {
         "Format": "Plexon",
         "Suffixes": null,
-        "Example Data": false,
-        "SpikeInterface - Extractor": false,
-        "SpikeInterface - Tests": false,
-        "NeuroConv - Interface": false,
-        "NeuroConv - Tests": false,
-        "NWB GUIDE": false
+        "Example Data": true,
+        "SpikeInterface - Extractor": true,
+        "SpikeInterface - Tests": true,
+        "NeuroConv - Interface": true,
+        "NeuroConv - Tests": true,
+        "NWB GUIDE": true
     },
     {
         "Format": "Phy",
