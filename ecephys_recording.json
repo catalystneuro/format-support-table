@@ -730,7 +730,7 @@
     {
         "Format": "TDT",
         "Versions": null,
-        "Suffixes": ".tbk, .tbx, .tev, .tsq"
+        "Suffixes": ".tbk, .tbx, .tev, .tsq",
         "Example Data": true,
         "Neo - Raw IO": true,
         "Neo - Tests": true,
