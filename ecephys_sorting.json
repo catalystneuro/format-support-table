@@ -33,10 +33,10 @@
         "Format": "Blackrock",
         "Suffixes": null,
         "Example Data": false,
-        "SpikeInterface - Extractor": false,
-        "SpikeInterface - Tests": false,
-        "NeuroConv - Interface": false,
-        "NeuroConv - Tests": false,
+        "SpikeInterface - Extractor": true,
+        "SpikeInterface - Tests": true,
+        "NeuroConv - Interface": true,
+        "NeuroConv - Tests": true,
         "NWB GUIDE": true
     },
     {
@@ -55,8 +55,8 @@
         "Example Data": true,
         "SpikeInterface - Extractor": true,
         "SpikeInterface - Tests": true,
-        "NeuroConv - Interface": false,
-        "NeuroConv - Tests": false,
+        "NeuroConv - Interface": true,
+        "NeuroConv - Tests": true,
         "NWB GUIDE": true
     },
     {
@@ -85,8 +85,8 @@
         "Example Data": true,
         "SpikeInterface - Extractor": true,
         "SpikeInterface - Tests": true,
-        "NeuroConv - Interface": false,
-        "NeuroConv - Tests": false,
+        "NeuroConv - Interface": true,
+        "NeuroConv - Tests": true,
         "NWB GUIDE": true
     },
     {
@@ -123,10 +123,10 @@
         "Format": "Neuralynx",
         "Suffixes": null,
         "Example Data": false,
-        "SpikeInterface - Extractor": false,
-        "SpikeInterface - Tests": false,
-        "NeuroConv - Interface": false,
-        "NeuroConv - Tests": false,
+        "SpikeInterface - Extractor": true,
+        "SpikeInterface - Tests": true,
+        "NeuroConv - Interface": true,
+        "NeuroConv - Tests": true,
         "NWB GUIDE": false
     },
     {
@@ -135,27 +135,17 @@
         "Example Data": true,
         "SpikeInterface - Extractor": true,
         "SpikeInterface - Tests": true,
-        "NeuroConv - Interface": false,
-        "NeuroConv - Tests": false,
+        "NeuroConv - Interface": true,
+        "NeuroConv - Tests": true,
         "NWB GUIDE": true
-    },
-    {
-        "Format": "NWB",
-        "Suffixes": ".nwb",
-        "Example Data": true,
-        "SpikeInterface - Extractor": true,
-        "SpikeInterface - Tests": false,
-        "NeuroConv - Interface": false,
-        "NeuroConv - Tests": false,
-        "NWB GUIDE": false
     },
     {
         "Format": "OpenEphys",
         "Suffixes": ".spikes",
         "Example Data": true,
-        "SpikeInterface - Extractor": false,
-        "SpikeInterface - Tests": false,
-        "NeuroConv - Interface": false,
+        "SpikeInterface - Extractor": true,
+        "SpikeInterface - Tests": true,
+        "NeuroConv - Interface": true,
         "NeuroConv - Tests": false,
         "NWB GUIDE": true
     },
