@@ -184,11 +184,12 @@
     }
 
 
-    const overviewCols = ['Type']
+    const overviewCols = ['Modality']
 
     const totals = {}
+    
 
-    const overviewTable = Object.entries(tables).map(([Type, t]) => {
+    const overviewTable = Object.entries(tables).map(([Modality, t]) => {
       t.columns = t[0] ? Object.keys(t[0]) : []
 
       const stats = t.reduce((acc, cell) => {
@@ -196,33 +197,54 @@
             if (typeof cell[k] === 'boolean') {
               if (!overviewCols.includes(k)) overviewCols.push(k)
               if (!acc[k]) acc[k] = 0
-              if (!totals[k]) totals[k] = { value: 0, total: 0}
+
+              if (!totals[Modality]) totals[Modality] = {}
+              if (!totals[Modality][k]) totals[Modality][k] = { value: 0, total: 0}
 
               if(cell[k]) {
                 acc[k]++
-                totals[k].value++
+                totals[Modality][k].value++
               }
 
-              totals[k].total++
+              totals[Modality][k].total++
             }
           })
 
           return acc
       }, {})
 
-      return { Type, total: t.length, ...stats }
+      return { Modality, total: t.length, ...stats }
     })
 
-    overviewTable.push({
-      Type: "Total",
-      ...totals,
-    })
+    const totalRow = {  Modality: "Total" }
+    overviewTable.push(totalRow)
+
+    console.log('Overview Table Values', overviewTable)
+    console.log('Totals', totals)
+
+    for (let Modality in totals) {
+      totals[Modality]['NWB GUIDE'].total = totals[Modality]['NeuroConv - Interface'].value
+    }
+
+    const columnTotals = {}
+    for (let Modality in totals) {
+      for (let col in totals[Modality]) {
+        if (!totalRow[col]) totalRow[col] = 0
+        if (!columnTotals[col]) columnTotals[col] = { total: 0 }
+        totalRow[col] += totals[Modality][col].value
+        columnTotals[col].total += totals[Modality][col].total
+      }
+    }
+
+
+    totals.Total = columnTotals
 
     const guideValue = 'NWB GUIDE'
     const guideIdx = overviewCols.findIndex((v) => v === guideValue)
     overviewCols.splice(guideIdx, 1)
 
     overviewTable.columns = [...overviewCols, guideValue]
+    overviewTable.totals = totals
 
     tables = {
       Overview: overviewTable,
@@ -233,7 +255,7 @@
       return `${value}<small>${value && total ? ` (${(100 * value / total).toFixed(1)}%)` : ''}</small>`
     }
 
-    function createCell(value, { total }) {
+    function createCell(value, { total } = {}) {
       const td = document.createElement('td')
 
       if (typeof value === 'string') {
@@ -243,13 +265,12 @@
       
       else {
 
-        if (value && typeof value === 'object') {
-          total = value.total
-          value = value.value
-        }
+        if (value && typeof value === 'object') value = value.value
 
-        td.innerHTML = getPercent(value, total)
-        td.style.background = fractionToColor(value/total, .4)
+        if (value != undefined) td.innerHTML = getPercent(value, total)
+
+        const frac = value/total
+        td.style.background = fractionToColor(value/total, .4) 
       }
 
       td.setAttribute('value', value)
@@ -269,6 +290,7 @@
       const formatHeader = 'Format'
       const versionsHeader = 'Versions'
       const cols = info.columns
+      const totals = info.totals ?? {}
       const formatIdx = cols.findIndex((v) => v === formatHeader)
       const versionsIdx = cols.findIndex((v) => v === versionsHeader)
 
@@ -330,7 +352,7 @@
       const rows = info.map(cell => {
         const tr = document.createElement('tr')
         tr.append(...Object.entries(headers).map(([header, info]) => {
-          return (info === true) ? createCell(cell[header], cell) : info.map(key => createCell(cell[key], cell))
+          return (info === true) ? createCell(cell[header], totals[cell.Modality]?.[header]) : info.map(key => createCell(cell[key], totals[cell.Modality]?.[key]))
         }).flat().filter(o => !!o))
         return tr
       })
@@ -384,6 +406,7 @@
   // Author: Michele Locati <michele@locati.it>
   // Source: https://gist.github.com/mlocati/7210513
   function fractionToColor(frac, opacity = 1) {
+    frac = Math.min(frac, 1) // No more than 1
     const perc = frac * 100
     var r, g, b = 0;
     if(perc < 50) {
