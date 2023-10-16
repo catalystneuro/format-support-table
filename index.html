@@ -174,6 +174,22 @@
 
     const main = document.querySelector('main')
 
+    const subHeaderDelineator = ' - '
+    const guideValue = 'NWB GUIDE'
+
+    const columnOrder = [
+      "Modality",
+      "Format",
+      // "Versions",
+      "Suffixes",
+      "Example Data",
+      "Neo",
+      "SpikeInterface",
+      "ROIExtractors",
+      "NeuroConv",
+      guideValue
+    ]
+
     let tables = {
         'Ecephys - Recording': ecephysRec,
         'Ecephys - Sorting': ecephysSort,
@@ -223,7 +239,7 @@
     console.log('Totals', totals)
 
     for (let Modality in totals) {
-      totals[Modality]['NWB GUIDE'].total = totals[Modality]['NeuroConv - Interface'].value
+      totals[Modality][guideValue].total = totals[Modality]['NeuroConv - Interface'].value
     }
 
     const columnTotals = {}
@@ -239,7 +255,6 @@
 
     totals.Total = columnTotals
 
-    const guideValue = 'NWB GUIDE'
     const guideIdx = overviewCols.findIndex((v) => v === guideValue)
     overviewCols.splice(guideIdx, 1)
 
@@ -259,7 +274,7 @@
       const td = document.createElement('td')
 
       if (typeof value === 'string') {
-        const [title, subtitle] = value.split('-')
+        const [title, subtitle] = value.split(' - ')
         td.innerHTML = `${title}<br><small>${subtitle ?? ""}</small>`
       } 
       
@@ -289,7 +304,19 @@
 
       const formatHeader = 'Format'
       const versionsHeader = 'Versions'
+
       const cols = info.columns
+      .sort((a, b) => {
+        const [ aTitle ] = a.split(subHeaderDelineator)
+        const [ bTitle ] = b.split(subHeaderDelineator)
+        const aIdx = columnOrder.indexOf(aTitle)
+        const bIdx = columnOrder.indexOf(bTitle)
+        if (aIdx === -1 && bIdx === -1) return 0
+        if (aIdx === -1) return 1
+        if (bIdx === -1) return -1
+        return aIdx - bIdx
+      })
+
       const totals = info.totals ?? {}
       const formatIdx = cols.findIndex((v) => v === formatHeader)
       const versionsIdx = cols.findIndex((v) => v === versionsHeader)
@@ -306,7 +333,7 @@
 
       cols.forEach(str => {
 
-        const [ title, subtitle ] = str.split('-')
+        const [ title, subtitle ] = str.split(subHeaderDelineator)
 
         const consolidated = headers[title]
 
@@ -323,7 +350,9 @@
       // Add general headers
       const tr = document.createElement('tr')
 
-      const headerEls = Object.entries(headers).map(([cell, info], i) => {
+      const headerEntries = Object.entries(headers)
+
+      const headerEls = headerEntries.map(([cell, info], i) => {
         const th = document.createElement('th')
         const isMerged = info !== true
         if (isMerged) th.setAttribute('colspan',  info.length)
@@ -351,7 +380,7 @@
 
       const rows = info.map(cell => {
         const tr = document.createElement('tr')
-        tr.append(...Object.entries(headers).map(([header, info]) => {
+        tr.append(...headerEntries.map(([header, info]) => {
           return (info === true) ? createCell(cell[header], totals[cell.Modality]?.[header]) : info.map(key => createCell(cell[key], totals[cell.Modality]?.[key]))
         }).flat().filter(o => !!o))
         return tr
