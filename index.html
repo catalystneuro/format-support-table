@@ -176,9 +176,11 @@
 
     const subHeaderDelineator = ' - '
     const guideValue = 'NWB GUIDE'
+    const knownFormatsValue = 'Known Formats'
 
     const columnOrder = [
       "Modality",
+      knownFormatsValue,
       "Format",
       // "Versions",
       "Suffixes",
@@ -210,8 +212,12 @@
     const totals = {}
     
 
-    const overviewTable = Object.entries(tables).map(([Modality, t]) => {
-      t.columns = t[0] ? Object.keys(t[0]) : []
+    const modalities = Object.keys(tables)
+    const overviewTable = modalities.map(Modality => {
+      const t= tables[Modality]
+      const colSet = new Set()
+      t.forEach(arr => Object.keys(arr).forEach(k => colSet.add(k)))
+      t.columns = Array.from(colSet)
 
       const stats = t.reduce((acc, cell) => {
           Object.keys(cell).forEach(k => {
@@ -234,42 +240,35 @@
           return acc
       }, {})
 
-      return { Modality, total: t.length, ...stats }
+      return { Modality, [ knownFormatsValue ]: t.length, ...stats }
     })
 
     const totalRow = {  Modality: "Total" }
     overviewTable.push(totalRow)
 
-    console.log('Overview Table Values', overviewTable)
-    console.log('Totals', totals)
-
-    for (let Modality in totals) {
+    modalities.forEach(Modality => {
       Object.entries(totalAssociations).forEach(( [ target, source ] ) => {
         if (target in totals[Modality]) {
           const currentTotal = totals[Modality][target].total 
           const actualTotal = totals[Modality][source].value
-          totals[Modality][target].total  = actualTotal
+          if (actualTotal !== undefined) totals[Modality][target].total  = actualTotal
         }
       })
-    }
+    })
 
     const columnTotals = {}
-    for (let Modality in totals) {
+    modalities.forEach(Modality => {
       for (let col in totals[Modality]) {
         if (!totalRow[col]) totalRow[col] = 0
         if (!columnTotals[col]) columnTotals[col] = { total: 0 }
         totalRow[col] += totals[Modality][col].value
         columnTotals[col].total += totals[Modality][col].total
       }
-    }
-
+    })
 
     totals.Total = columnTotals
 
-    const guideIdx = overviewCols.findIndex((v) => v === guideValue)
-    overviewCols.splice(guideIdx, 1)
-
-    overviewTable.columns = [...overviewCols, guideValue]
+    overviewTable.columns = [ ...overviewCols, knownFormatsValue ]
     overviewTable.totals = totals
 
     tables = {
@@ -419,6 +418,8 @@
       table.innerText = ''
 
       const info = await tables[sheet]
+
+      console.log('Creating Table', info)
 
       Array.from(tabs.children).forEach(t => {
         if (t.innerText === sheet) t.setAttribute('selected', '')
