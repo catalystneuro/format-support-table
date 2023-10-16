@@ -87,6 +87,10 @@
       color: rgb(45, 45, 45);
     }
 
+    td[value="undefined"] {
+      background: black;
+    }
+
     td[value="TRUE"], td[value="FALSE"], td[value="true"], td[value="false"] {
       font-size:0;
     }
@@ -170,7 +174,7 @@
 
     const main = document.querySelector('main')
 
-    const tables = {
+    let tables = {
         'Ecephys - Recording': ecephysRec,
         'Ecephys - Sorting': ecephysSort,
         'Icephys': icephys,
@@ -179,22 +183,102 @@
         'Behavior': behavior
     }
 
-    Object.values(tables).forEach(t => t.columns = t[0] ? Object.keys(t[0]) : [])
 
-    function createCell(value) {
+    const overviewCols = ['Modality']
+
+    const totals = {}
+    
+
+    const overviewTable = Object.entries(tables).map(([Modality, t]) => {
+      t.columns = t[0] ? Object.keys(t[0]) : []
+
+      const stats = t.reduce((acc, cell) => {
+          Object.keys(cell).forEach(k => {
+            if (typeof cell[k] === 'boolean') {
+              if (!overviewCols.includes(k)) overviewCols.push(k)
+              if (!acc[k]) acc[k] = 0
+
+              if (!totals[Modality]) totals[Modality] = {}
+              if (!totals[Modality][k]) totals[Modality][k] = { value: 0, total: 0}
+
+              if(cell[k]) {
+                acc[k]++
+                totals[Modality][k].value++
+              }
+
+              totals[Modality][k].total++
+            }
+          })
+
+          return acc
+      }, {})
+
+      return { Modality, total: t.length, ...stats }
+    })
+
+    const totalRow = {  Modality: "Total" }
+    overviewTable.push(totalRow)
+
+    console.log('Overview Table Values', overviewTable)
+    console.log('Totals', totals)
+
+    for (let Modality in totals) {
+      totals[Modality]['NWB GUIDE'].total = totals[Modality]['NeuroConv - Interface'].value
+    }
+
+    const columnTotals = {}
+    for (let Modality in totals) {
+      for (let col in totals[Modality]) {
+        if (!totalRow[col]) totalRow[col] = 0
+        if (!columnTotals[col]) columnTotals[col] = { total: 0 }
+        totalRow[col] += totals[Modality][col].value
+        columnTotals[col].total += totals[Modality][col].total
+      }
+    }
+
+
+    totals.Total = columnTotals
+
+    const guideValue = 'NWB GUIDE'
+    const guideIdx = overviewCols.findIndex((v) => v === guideValue)
+    overviewCols.splice(guideIdx, 1)
+
+    overviewTable.columns = [...overviewCols, guideValue]
+    overviewTable.totals = totals
+
+    tables = {
+      Overview: overviewTable,
+      ...tables
+    }
+
+    function getPercent(value, total) {
+      return `${value}<small>${value && total ? ` (${(100 * value / total).toFixed(1)}%)` : ''}</small>`
+    }
+
+    function createCell(value, { total } = {}) {
       const td = document.createElement('td')
-      if (value === undefined) return
 
       if (typeof value === 'string') {
         const [title, subtitle] = value.split('-')
         td.innerHTML = `${title}<br><small>${subtitle ?? ""}</small>`
+      } 
+      
+      else {
+
+        if (value && typeof value === 'object') value = value.value
+
+        if (value != undefined) td.innerHTML = getPercent(value, total)
+
+        const frac = value/total
+        td.style.background = fractionToColor(value/total, .4) 
       }
 
       td.setAttribute('value', value)
+      
       return td
     }
 
-    function addColumnsToTable (table, info) {
+    function addColumnsToTable (table, info, nColsSticky) {
 
       let merged = null;
       let headerRowSize = 1
@@ -206,6 +290,7 @@
       const formatHeader = 'Format'
       const versionsHeader = 'Versions'
       const cols = info.columns
+      const totals = info.totals ?? {}
       const formatIdx = cols.findIndex((v) => v === formatHeader)
       const versionsIdx = cols.findIndex((v) => v === versionsHeader)
 
@@ -264,13 +349,10 @@
           table.append(tr)
       }
 
-      const rows = info.map(row => {
+      const rows = info.map(cell => {
         const tr = document.createElement('tr')
         tr.append(...Object.entries(headers).map(([header, info]) => {
-
-          if (info === true) return createCell(row[header])
-          else return info.map(key => createCell(row[key]))
-
+          return (info === true) ? createCell(cell[header], totals[cell.Modality]?.[header]) : info.map(key => createCell(cell[key], totals[cell.Modality]?.[key]))
         }).flat().filter(o => !!o))
         return tr
       })
@@ -298,7 +380,12 @@
 
       const info = await tables[sheet]
 
-      addColumnsToTable(table, info)
+      Array.from(tabs.children).forEach(t => {
+        if (t.innerText === sheet) t.setAttribute('selected', '')
+        else t.removeAttribute('selected')
+      })
+
+      addColumnsToTable(table, info, sheet === 'Overview' ? 1 : nColsSticky)
 
     }
 
@@ -312,6 +399,27 @@
     }))
 
     updateTable(Object.keys(tables)[0])
+
+
+
+    // License: MIT - https://opensource.org/licenses/MIT
+  // Author: Michele Locati <michele@locati.it>
+  // Source: https://gist.github.com/mlocati/7210513
+  function fractionToColor(frac, opacity = 1) {
+    frac = Math.min(frac, 1) // No more than 1
+    const perc = frac * 100
+    var r, g, b = 0;
+    if(perc < 50) {
+      r = 255;
+      g = Math.round(5.1 * perc);
+    }
+    else {
+      g = 255;
+      r = Math.round(510 - 5.10 * perc);
+    }
+    var h = r * 0x10000 + g * 0x100 + b * 0x1;
+    return '#' + ('000000' + h.toString(16)).slice(-6) + (Math.round(255 * opacity)).toString(16);
+  }
 
   </script>
 </body>
