@@ -673,7 +673,7 @@
         "SpikeInterface - Tests": true,
         "NeuroConv - Interface": true,
         "NeuroConv - Tests": true,
-        "NWB GUIDE": false
+        "NWB GUIDE": true
     },
     {
         "Format": "Plexon",
