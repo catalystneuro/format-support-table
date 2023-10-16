@@ -190,6 +190,11 @@
       guideValue
     ]
 
+    const totalAssociations = {
+      [guideValue]: "NeuroConv - Interface",
+      "SpikeInterface - Extractor": "Neo - Raw IO",
+    }
+
     let tables = {
         'Ecephys - Recording': ecephysRec,
         'Ecephys - Sorting': ecephysSort,
@@ -222,7 +227,7 @@
                 totals[Modality][k].value++
               }
 
-              totals[Modality][k].total++
+              totals[Modality][k].total++ // Add to the total number of known interfaces
             }
           })
 
@@ -239,7 +244,13 @@
     console.log('Totals', totals)
 
     for (let Modality in totals) {
-      totals[Modality][guideValue].total = totals[Modality]['NeuroConv - Interface'].value
+      Object.entries(totalAssociations).forEach(( [ target, source ] ) => {
+        if (target in totals[Modality]) {
+          const currentTotal = totals[Modality][target].total 
+          const actualTotal = totals[Modality][source].value
+          totals[Modality][target].total  = actualTotal
+        }
+      })
     }
 
     const columnTotals = {}
