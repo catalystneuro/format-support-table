@@ -18,11 +18,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
-      - name: Install and Build
-        uses: actions/jekyll-build-pages@v1
-
       - name: Deploy preview
         uses: rossjrw/pr-preview-action@v1
         with:
-          source-dir: _site/
-          preview-branch: test-pull-request-pages
+          source-dir: /
