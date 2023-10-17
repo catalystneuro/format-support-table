@@ -1,0 +1,72 @@
+[
+    {
+        "Format": "Bruker",
+        "Suffixes": ".ome.tif, .xml",
+        "Example Data": true,
+        "ROIExtractors - Extractor": true,
+        "ROIExtractors - Tests": true,
+        "NeuroConv - Interface": true,
+        "NeuroConv - Tests": true,
+        "NWB GUIDE": true
+    },
+    {
+        "Format": "Generic HDF5",
+        "Suffixes": ".hdf5, .h5",
+        "Example Data": true,
+        "ROIExtractors - Extractor": true,
+        "ROIExtractors - Tests": true,
+        "NeuroConv - Interface": true,
+        "NeuroConv - Tests": true,
+        "NWB GUIDE": false
+    },
+    {
+        "Format": "Generic TIFF",
+        "Suffixes": ".tiff, .tif",
+        "Example Data": true,
+        "ROIExtractors - Extractor": true,
+        "ROIExtractors - Tests": true,
+        "NeuroConv - Interface": true,
+        "NeuroConv - Tests": true,
+        "NWB GUIDE": true
+    },
+    {
+        "Format": "Micro-Manager",
+        "Suffixes": ".ome.tif, .json",
+        "Example Data": true,
+        "ROIExtractors - Extractor": true,
+        "ROIExtractors - Tests": true,
+        "NeuroConv - Interface": true,
+        "NeuroConv - Tests": true,
+        "NWB GUIDE": true
+    },
+    {
+        "Format": "Miniscope",
+        "Suffixes": ".avi, .csv, .json",
+        "Example Data": true,
+        "ROIExtractors - Extractor": true,
+        "ROIExtractors - Tests": true,
+        "NeuroConv - Interface": true,
+        "NeuroConv - Tests": true,
+        "NWB GUIDE": true
+    },
+    {
+        "Format": "ScanBox",
+        "Suffixes": ".sbx",
+        "Example Data": true,
+        "ROIExtractors - Extractor": true,
+        "ROIExtractors - Tests": true,
+        "NeuroConv - Interface": true,
+        "NeuroConv - Tests": true,
+        "NWB GUIDE": true
+    },
+    {
+        "Format": "ScanImage",
+        "Suffixes": ".tif",
+        "Example Data": true,
+        "ROIExtractors - Extractor": true,
+        "ROIExtractors - Tests": true,
+        "NeuroConv - Interface": true,
+        "NeuroConv - Tests": true,
+        "NWB GUIDE": true
+    }
+]

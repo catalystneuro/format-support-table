@@ -1,0 +1,42 @@
+[
+    {
+        "Format": "Audio",
+        "Suffixes": ".wav",
+        "Example Data": true,
+        "NeuroConv - Interface": true,
+        "NeuroConv - Tests": true,
+        "NWB GUIDE": false
+    },
+    {
+        "Format": "DeepLabCut",
+        "Suffixes": ".h5, .yaml",
+        "Example Data": true,
+        "NeuroConv - Interface": true,
+        "NeuroConv - Tests": true,
+        "NWB GUIDE": false
+    },
+    {
+        "Format": "FicTrac",
+        "Suffixes": ".dat, .mp4, .txt, .log",
+        "Example Data": true,
+        "NeuroConv - Interface": true,
+        "NeuroConv - Tests": true,
+        "NWB GUIDE": false
+    },
+    {
+        "Format": "SLEAP",
+        "Suffixes": ".slp, .mp4",
+        "Example Data": true,
+        "NeuroConv - Interface": true,
+        "NeuroConv - Tests": true,
+        "NWB GUIDE": false
+    },
+    {
+        "Format": "Videos",
+        "Suffixes": ".avi, .flv, .mov, .mp4, .wmv",
+        "Example Data": true,
+        "NeuroConv - Interface": true,
+        "NeuroConv - Tests": true,
+        "NWB GUIDE": false
+    }
+]
