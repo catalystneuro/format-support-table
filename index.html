@@ -250,8 +250,8 @@
       Object.entries(totalAssociations).forEach(( [ target, source ] ) => {
         if (target in totals[Modality]) {
           const currentTotal = totals[Modality][target].total 
-          const actualTotal = totals[Modality][source].value
-          if (actualTotal !== undefined) totals[Modality][target].total  = actualTotal
+          const actualTotal = totals[Modality][source]?.value
+          if (actualTotal != undefined) totals[Modality][target].total  = actualTotal
         }
       })
     })
