@@ -151,7 +151,6 @@
     },
     {
         "Format": "Plexon",
-        "Versions": null,
         "Suffixes": ".plx",
         "Example Data": true,
         "SpikeInterface - Extractor": true,
@@ -162,7 +161,6 @@
     },
     {
         "Format": "Plexon",
-        "Versions": null,
         "Suffixes": ".pl2",
         "Example Data": true,
         "SpikeInterface - Extractor": false,
