@@ -244,7 +244,7 @@
         "SpikeInterface - Tests": true,
         "NeuroConv - Interface": true,
         "NeuroConv - Tests": false,
-        "NWB GUIDE": false
+        "NWB GUIDE": true
     },
     {
         "Format": "Neuralynx",
@@ -257,7 +257,7 @@
         "SpikeInterface - Tests": true,
         "NeuroConv - Interface": true,
         "NeuroConv - Tests": false,
-        "NWB GUIDE": false
+        "NWB GUIDE": true
     },
     {
         "Format": "Neuralynx",
@@ -270,7 +270,7 @@
         "SpikeInterface - Tests": true,
         "NeuroConv - Interface": true,
         "NeuroConv - Tests": false,
-        "NWB GUIDE": false
+        "NWB GUIDE": true
     },
     {
         "Format": "Neuralynx",
@@ -283,7 +283,7 @@
         "SpikeInterface - Tests": true,
         "NeuroConv - Interface": true,
         "NeuroConv - Tests": false,
-        "NWB GUIDE": false
+        "NWB GUIDE": true
     },
     {
         "Format": "Neuralynx",
@@ -296,7 +296,7 @@
         "SpikeInterface - Tests": true,
         "NeuroConv - Interface": true,
         "NeuroConv - Tests": false,
-        "NWB GUIDE": false
+        "NWB GUIDE": true
     },
     {
         "Format": "Neuralynx",
@@ -309,7 +309,7 @@
         "SpikeInterface - Tests": true,
         "NeuroConv - Interface": true,
         "NeuroConv - Tests": true,
-        "NWB GUIDE": false
+        "NWB GUIDE": true
     },
     {
         "Format": "Neuralynx",
@@ -322,7 +322,7 @@
         "SpikeInterface - Tests": false,
         "NeuroConv - Interface": true,
         "NeuroConv - Tests": false,
-        "NWB GUIDE": false
+        "NWB GUIDE": true
     },
     {
         "Format": "Neuralynx",
@@ -335,7 +335,7 @@
         "SpikeInterface - Tests": false,
         "NeuroConv - Interface": false,
         "NeuroConv - Tests": false,
-        "NWB GUIDE": false
+        "NWB GUIDE": true
     },
     {
         "Format": "NeuroExplorer",
