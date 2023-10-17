@@ -3,6 +3,8 @@
         "Format": "ALF",
         "Suffixes": null,
         "Example Data": false,
+        "Neo - Raw IO": false,
+        "Neo - Tests": false,
         "SpikeInterface - Extractor": true,
         "SpikeInterface - Tests": false,
         "NeuroConv - Interface": false,
