@@ -1,0 +1,42 @@
+[
+    {
+        "Format": "CaImAn",
+        "Suffixes": ".hdf5",
+        "Example Data": true,
+        "ROIExtractors - Extractor": true,
+        "ROIExtractors - Tests": true,
+        "NeuroConv - Interface": true,
+        "NeuroConv - Tests": true,
+        "NWB GUIDE": true
+    },
+    {
+        "Format": "CNMFE",
+        "Suffixes": ".mat",
+        "Example Data": true,
+        "ROIExtractors - Extractor": true,
+        "ROIExtractors - Tests": true,
+        "NeuroConv - Interface": true,
+        "NeuroConv - Tests": true,
+        "NWB GUIDE": false
+    },
+    {
+        "Format": "EXTRACT-public",
+        "Suffixes": ".mat",
+        "Example Data": true,
+        "ROIExtractors - Extractor": true,
+        "ROIExtractors - Tests": true,
+        "NeuroConv - Interface": true,
+        "NeuroConv - Tests": true,
+        "NWB GUIDE": false
+    },
+    {
+        "Format": "suite2p",
+        "Suffixes": ".npy",
+        "Example Data": true,
+        "ROIExtractors - Extractor": true,
+        "ROIExtractors - Tests": true,
+        "NeuroConv - Interface": true,
+        "NeuroConv - Tests": true,
+        "NWB GUIDE": false
+    }
+]
