@@ -10,7 +10,10 @@
         "SpikeInterface - Tests": true,
         "NeuroConv - Interface": true,
         "NeuroConv - Tests": true,
-        "NWB GUIDE": true
+        "NWB GUIDE": {
+            "value": true,
+            "url": "https://github.com/NeurodataWithoutBorders/nwb-guide/pull/448"
+        }
     },
     {
         "Format": "Axona",

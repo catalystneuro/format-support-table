@@ -37,12 +37,25 @@
     }
 
     td, th {
+        position: relative;
         padding: 5px 10px;
         border: 1px solid #000;
         border-top: none;
         border-left: none;
     }
 
+    .link {
+      cursor: pointer
+    }
+
+    .link::after {
+      content:  url(./open.svg);
+      position: absolute;
+      right: 5px;
+      top: 5px;
+      font-size: 10px;
+    }
+    
     /* Sticky Header Rows */
     tr:first-child {
       position: sticky;
@@ -221,14 +234,17 @@
 
       const stats = t.reduce((acc, cell) => {
           Object.keys(cell).forEach(k => {
-            if (typeof cell[k] === 'boolean') {
+            let value = cell[k] 
+            if (value?.value) value = value.value
+
+            if (typeof value === 'boolean') {
               if (!overviewCols.includes(k)) overviewCols.push(k)
               if (!acc[k]) acc[k] = 0
 
               if (!totals[Modality]) totals[Modality] = {}
               if (!totals[Modality][k]) totals[Modality][k] = { value: 0, total: 0}
 
-              if(cell[k]) {
+              if(value) {
                 acc[k]++
                 totals[Modality][k].value++
               }
@@ -283,6 +299,8 @@
     function createCell(value, { total } = {}) {
       const td = document.createElement('td')
 
+      let url;
+
       if (typeof value === 'string') {
         const [title, subtitle] = value.split(' - ')
         td.innerHTML = `${title}<br><small>${subtitle ?? ""}</small>`
@@ -290,12 +308,20 @@
       
       else {
 
-        if (value && typeof value === 'object') value = value.value
+        if (value && typeof value === 'object') {
+          url = value.url
+          value = value.value
+        }
 
         if (value != undefined) td.innerHTML = getPercent(value, total)
 
         const frac = value/total
         td.style.background = fractionToColor(value/total, .4) 
+      }
+
+      if (url) {
+        td.classList.add('link')
+        td.onclick=()=> window.open(url, '_blank')
       }
 
       td.setAttribute('value', value)
