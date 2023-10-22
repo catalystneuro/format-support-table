@@ -39,7 +39,11 @@
         "SpikeInterface - Tests": false,
         "NeuroConv - Interface": true,
         "NeuroConv - Tests": true,
-        "NWB GUIDE": false
+        "NWB GUIDE": false,
+        "Status": {
+            "value": "Request format support",
+            "url": "https://github.com/NeurodataWithoutBorders/nwb-guide/issues/new?assignees=&labels=&projects=&template=feature_request.md&title="
+        }
     },
     {
         "Format": "Axion",
@@ -52,7 +56,11 @@
         "SpikeInterface - Tests": false,
         "NeuroConv - Interface": false,
         "NeuroConv - Tests": false,
-        "NWB GUIDE": false
+        "NWB GUIDE": false,
+        "Status": {
+            "value": "Seeking example data",
+            "url": "https://github.com/catalystneuro/neuroconv/issues/new?assignees=&labels=enhancement%2Cdata+interfaces&projects=&template=format_request.yml&title=%5BNew+Format%5D%3A+"
+        }
     },
     {
         "Format": "Biocam",
