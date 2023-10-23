@@ -1,0 +1,54 @@
+[
+    {
+        "Format": "Audio",
+        "Suffixes": ".wav",
+        "Example Data": true,
+        "NeuroConv - Interface": true,
+        "NeuroConv - Tests": true,
+        "NWB GUIDE": {
+            "value": true,
+            "url": "https://github.com/NeurodataWithoutBorders/nwb-guide/pull/449"
+        }
+    },
+    {
+        "Format": "DeepLabCut",
+        "Suffixes": ".h5, .yaml",
+        "Example Data": true,
+        "NeuroConv - Interface": true,
+        "NeuroConv - Tests": true,
+        "NWB GUIDE": {
+            "value": true,
+            "url": "https://github.com/NeurodataWithoutBorders/nwb-guide/pull/450"
+        }
+    },
+    {
+        "Format": "FicTrac",
+        "Suffixes": ".dat, .mp4, .txt, .log",
+        "Example Data": true,
+        "NeuroConv - Interface": true,
+        "NeuroConv - Tests": true,
+        "NWB GUIDE": {
+            "value": true,
+            "url": "https://github.com/NeurodataWithoutBorders/nwb-guide/pull/453"
+        }
+    },
+    {
+        "Format": "SLEAP",
+        "Suffixes": ".slp, .mp4",
+        "Example Data": true,
+        "NeuroConv - Interface": true,
+        "NeuroConv - Tests": true,
+        "NWB GUIDE": {
+            "value": true,
+            "url": "https://github.com/NeurodataWithoutBorders/nwb-guide/pull/451"
+        }
+    },
+    {
+        "Format": "Videos",
+        "Suffixes": ".avi, .flv, .mov, .mp4, .wmv",
+        "Example Data": true,
+        "NeuroConv - Interface": true,
+        "NeuroConv - Tests": true,
+        "NWB GUIDE": false
+    }
+]
