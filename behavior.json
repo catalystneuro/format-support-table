@@ -5,7 +5,10 @@
         "Example Data": true,
         "NeuroConv - Interface": true,
         "NeuroConv - Tests": true,
-        "NWB GUIDE": false
+        "NWB GUIDE": {
+            "value": true,
+            "url": "https://github.com/NeurodataWithoutBorders/nwb-guide/pull/449"
+        }
     },
     {
         "Format": "DeepLabCut",
@@ -13,7 +16,10 @@
         "Example Data": true,
         "NeuroConv - Interface": true,
         "NeuroConv - Tests": true,
-        "NWB GUIDE": false
+        "NWB GUIDE": {
+            "value": true,
+            "url": "https://github.com/NeurodataWithoutBorders/nwb-guide/pull/450"
+        }
     },
     {
         "Format": "FicTrac",
@@ -21,7 +27,10 @@
         "Example Data": true,
         "NeuroConv - Interface": true,
         "NeuroConv - Tests": true,
-        "NWB GUIDE": false
+        "NWB GUIDE": {
+            "value": true,
+            "url": "https://github.com/NeurodataWithoutBorders/nwb-guide/pull/453"
+        }
     },
     {
         "Format": "SLEAP",
@@ -29,7 +38,10 @@
         "Example Data": true,
         "NeuroConv - Interface": true,
         "NeuroConv - Tests": true,
-        "NWB GUIDE": false
+        "NWB GUIDE": {
+            "value": true,
+            "url": "https://github.com/NeurodataWithoutBorders/nwb-guide/pull/451"
+        }
     },
     {
         "Format": "Videos",
