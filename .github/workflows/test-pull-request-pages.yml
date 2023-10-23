@@ -20,9 +20,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
 
+      - name: Install Dependencies
+        run: npm install
+
+      - name: Build
+        run: npm run build
+
       - name: Deploy preview
         uses: rossjrw/pr-preview-action@v1
         with:
-          source-dir: .
+          source-dir: dist
           umbrella-dir: pr-preview
           preview-branch: gh-pages
