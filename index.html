@@ -261,10 +261,8 @@
       return { Modality, [ knownFormatsValue ]: t.length, ...stats }
     })
 
-    const totalRow = {  Modality: "Total" }
-    overviewTable.push(totalRow)
-
     modalities.forEach(Modality => {
+
       Object.entries(totalAssociations).forEach(( [ target, source ] ) => {
         if (target in totals[Modality]) {
           const currentTotal = totals[Modality][target].total 
@@ -274,8 +272,12 @@
       })
     })
 
+
     const columnTotals = {}
+    const totalRow = {  Modality: "Total", [knownFormatsValue]: 0 }
+
     modalities.forEach(Modality => {
+
       for (let col in totals[Modality]) {
         if (!totalRow[col]) totalRow[col] = 0
         if (!columnTotals[col]) columnTotals[col] = { total: 0 }
@@ -283,6 +285,12 @@
         columnTotals[col].total += totals[Modality][col].total
       }
     })
+
+    overviewTable.forEach(row =>{
+      totalRow[knownFormatsValue] += row[knownFormatsValue]
+    })
+
+    overviewTable.push(totalRow)
 
     totals.Total = columnTotals
 
