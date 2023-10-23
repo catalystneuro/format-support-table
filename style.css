@@ -3,19 +3,26 @@
     box-sizing: border-box;
   }
 
+
   html, body {
     width: 100vw;
-    height: 100vh;
     margin: 0;
     overflow: hidden;
     font-family: Arial, Helvetica, sans-serif
   }
 
+
   body {
     display: grid;
     grid-template-rows: 1fr min-content;
+    min-height: 100vh;
+    min-height: -webkit-fill-available;
   }
-
+  
+  html {
+    height: -webkit-fill-available;
+  }
+  
   h2 {
     background: black;
     color: white;
