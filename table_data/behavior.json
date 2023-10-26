@@ -50,5 +50,13 @@
         "NeuroConv - Interface": true,
         "NeuroConv - Tests": true,
         "NWB GUIDE": false
+    },
+    {
+        "Format": "Neuralynx Video",
+        "Suffixes": ".nvt",
+        "Example Data": true,
+        "NeuroConv - Interface": true,
+        "NeuroConv - Tests": true,
+        "NWB GUIDE": false
     }
 ]
