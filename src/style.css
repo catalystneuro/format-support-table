@@ -51,7 +51,7 @@
   }
 
   .link::after {
-    content:  url(./open.svg);
+    content:  url(./assets/open.svg);
     position: absolute;
     right: 5px;
     top: 5px;

@@ -1,12 +1,12 @@
 
 const nColsSticky = 3
 
-import ecephysRec from './table_data/ecephys_recording.json' assert { type: 'json' };
-import ecephysSort from './table_data/ecephys_sorting.json' assert { type: 'json' };
-import icephys from './table_data/icephys.json' assert { type: 'json' };
-import ophysImg from './table_data/ophys_imaging.json' assert { type: 'json' };
-import ophysSeg from './table_data/ophys_segmentation.json' assert { type: 'json' };
-import behavior from './table_data/behavior.json' assert { type: 'json' };
+import ecephysRec from './assets/table_data/ecephys_recording.json' assert { type: 'json' };
+import ecephysSort from './assets/table_data/ecephys_sorting.json' assert { type: 'json' };
+import icephys from './assets/table_data/icephys.json' assert { type: 'json' };
+import ophysImg from './assets/table_data/ophys_imaging.json' assert { type: 'json' };
+import ophysSeg from './assets/table_data/ophys_segmentation.json' assert { type: 'json' };
+import behavior from './assets/table_data/behavior.json' assert { type: 'json' };
 
 const subHeaderDelineator = ' - '
 const guideValue = 'NWB GUIDE'
