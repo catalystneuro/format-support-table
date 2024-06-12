@@ -30,13 +30,13 @@
         "NWB GUIDE": true
     },
     {
-        "Format": "suite2p",
+        "Format": "Suite2p",
         "Suffixes": ".npy",
         "Example Data": true,
         "ROIExtractors - Extractor": true,
         "ROIExtractors - Tests": true,
         "NeuroConv - Interface": true,
         "NeuroConv - Tests": true,
-        "NWB GUIDE": false
+        "NWB GUIDE": true
     }
 ]
