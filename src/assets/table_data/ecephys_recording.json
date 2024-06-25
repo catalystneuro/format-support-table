@@ -500,7 +500,7 @@
         "Neo - Tests": true,
         "SpikeInterface - Extractor": true,
         "SpikeInterface - Tests": true,
-        "NeuroConv - Interface": true,
+        "NeuroConv - Interface": false,
         "NeuroConv - Tests": false,
         "NWB GUIDE": false
     },
